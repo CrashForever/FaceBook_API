@@ -1,2 +1,3 @@
 config/
-spec/fixtures/results.yml
+spec/*
+.DS_Store
