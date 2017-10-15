@@ -19,13 +19,18 @@ module PostsPraise
     end
 
     def getPosts(fanpageName)
+      posts = []
       fanpage_id_info = get_fanpage_id(fanpageName)
       cowbeiNTHU_post_url = fb_get_Fanpage_posts_path(fanpage_id_info['id'], 'fields=message&limit=100')
       fanPages_Posts = JSON.parse(call_fb_api_url(cowbeiNTHU_post_url))
       fanPages_Posts['data'].each do |post|
-        Post.new(post)
+        posts.push(Post.new(post))
       end
+      return posts
     end
+
+
+    private
 
     def get_fanpage_id(fanpage)
       cowbeiNTHU_id_url = fb_get_id_path(fanpage)
@@ -33,7 +38,6 @@ module PostsPraise
     end
 
     def fb_get_id_path(id)
-      puts 'https://graph.facebook.com/v2.10/' + id
       'https://graph.facebook.com/v2.10/' + id
     end
 
@@ -44,7 +48,6 @@ module PostsPraise
     end
 
     def fb_get_Fanpage_posts_path(id, fields = '')
-      puts 'https://graph.facebook.com/v2.10/' + id + '/feed?' + fields
       'https://graph.facebook.com/v2.10/' + id + '/feed?' + fields
     end
 
