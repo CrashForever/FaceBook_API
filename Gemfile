@@ -5,3 +5,5 @@ gem 'json'
 
 gem 'minitest'
 gem 'minitest-rg'
+gem 'vcr'
+gem 'webmock'
