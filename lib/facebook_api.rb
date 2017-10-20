@@ -1,4 +1,6 @@
 require 'http'
+require 'vcr'
+require 'webmock'
 require_relative 'posts_data.rb'
 
 module PostsPraise
@@ -22,7 +24,18 @@ module PostsPraise
       posts = []
       fanpage_id_info = get_fanpage_id(fanpageName)
       cowbeiNTHU_post_url = fb_get_Fanpage_posts_path(fanpage_id_info['id'], 'fields=message&limit=100')
+
+      VCR.configure do |c|
+        c.cassette_library_dir = './spec/fixtures/cassettes/'
+        c.hook_into :webmock
+        c.filter_sensitive_data('<FACEBOOK_TOKEN>'){ @fb_token }
+        c.filter_sensitive_data('<FACEBOOK_TOKEN_ESC>'){ CGI.escape(@fb_token) }
+      end
+      VCR.insert_cassette 'fbAPI', record: :new_episodes
+
       fanPages_Posts = JSON.parse(call_fb_api_url(cowbeiNTHU_post_url))
+      VCR.eject_cassette
+
       fanPages_Posts['data'].each do |post|
         posts.push(Post.new(post))
       end
@@ -42,6 +55,7 @@ module PostsPraise
     end
 
     def call_fb_api_url(url)
+
       HTTP.headers(
         'Authorization' => "Bearer #{@fb_token}"
       ).get(url)
