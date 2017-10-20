@@ -29,19 +29,19 @@ http_interactions:
       Cache-Control:
       - private, no-cache, no-store, must-revalidate
       X-Fb-Rev:
-      - '3387634'
+      - '3387783'
       Content-Type:
       - text/javascript; charset=UTF-8
       X-Fb-Trace-Id:
-      - FnhNA74pwij
+      - GosBsig1QZ2
       Facebook-Api-Version:
       - v2.10
       Expires:
       - Sat, 01 Jan 2000 00:00:00 GMT
       X-Fb-Debug:
-      - k+08Ea66fEgMjSHqeZY+WF698VJkDXHnB57sSqR0h0B51aRsDGJVIDGXiJv3b/l3Pk3+6Wzp1/bLhsmkE9PCZA==
+      - jti1MIGkGVvj/NQKE3sNDrC7dqCoUhpxi7jjCRc8HV2nF17D8MWH+8l0w9jUmrD0BxCB4fp4+fp4YAsMnHQfOg==
       Date:
-      - Fri, 20 Oct 2017 09:32:15 GMT
+      - Fri, 20 Oct 2017 12:49:31 GMT
       Connection:
       - close
       Content-Length:
@@ -50,5 +50,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"name":"\u9760\u5317\u6e05\u5927","id":"576472312465910"}'
     http_version: 
-  recorded_at: Fri, 20 Oct 2017 09:32:15 GMT
+  recorded_at: Fri, 20 Oct 2017 12:49:30 GMT
 recorded_with: VCR 3.0.3
