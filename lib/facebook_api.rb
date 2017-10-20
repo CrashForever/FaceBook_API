@@ -20,34 +20,33 @@ module PostsPraise
       @fb_token = config['FB_API_TOKEN']
     end
 
-    def getPosts(fanpageName)
+    def get_posts(fanpage_name)
       posts = []
-      fanpage_id_info = get_fanpage_id(fanpageName)
-      cowbeiNTHU_post_url = fb_get_Fanpage_posts_path(fanpage_id_info['id'], 'fields=message&limit=100')
+      fanpage_id_info = get_fanpage_id(fanpage_name)
+      cowbeinthu_post_url = fb_get_fanpage_posts_path(fanpage_id_info['id'], 'fields=message&limit=100')
 
       VCR.configure do |c|
         c.cassette_library_dir = '../spec/fixtures/cassettes/'
         c.hook_into :webmock
-        c.filter_sensitive_data('<FACEBOOK_TOKEN>'){ @fb_token }
-        c.filter_sensitive_data('<FACEBOOK_TOKEN_ESC>'){ CGI.escape(@fb_token) }
+        c.filter_sensitive_data('<FACEBOOK_TOKEN>') { @fb_token }
+        c.filter_sensitive_data('<FACEBOOK_TOKEN_ESC>') { CGI.escape(@fb_token) }
       end
       VCR.insert_cassette 'fbAPI', record: :new_episodes
 
-      fanPages_Posts = JSON.parse(call_fb_api_url(cowbeiNTHU_post_url))
+      fanpages_posts = JSON.parse(call_fb_api_url(cowbeinthu_post_url))
       VCR.eject_cassette
 
-      fanPages_Posts['data'].each do |post|
+      fanpages_posts['data'].each do |post|
         posts.push(Post.new(post))
       end
-      return posts
+      posts
     end
-
 
     private
 
     def get_fanpage_id(fanpage)
-      cowbeiNTHU_id_url = fb_get_id_path(fanpage)
-      JSON.parse(call_fb_api_url(cowbeiNTHU_id_url))
+      cowbeinthu_id_url = fb_get_id_path(fanpage)
+      JSON.parse(call_fb_api_url(cowbeinthu_id_url))
     end
 
     def fb_get_id_path(id)
@@ -55,13 +54,12 @@ module PostsPraise
     end
 
     def call_fb_api_url(url)
-
       HTTP.headers(
         'Authorization' => "Bearer #{@fb_token}"
       ).get(url)
     end
 
-    def fb_get_Fanpage_posts_path(id, fields = '')
+    def fb_get_fanpage_posts_path(id, fields = '')
       'https://graph.facebook.com/v2.10/' + id + '/feed?' + fields
     end
 
