@@ -1,13 +1,6 @@
-require 'minitest/autorun'
-require 'minitest/rg'
-require 'yaml'
-require_relative '../lib/facebook_api.rb'
+require_relative 'spec_helper.rb'
 
 describe 'Tests Praise library' do
-    PAGE_NAME = 'cowbeiNTHU'.freeze
-    CONFIG = YAML.safe_load(File.read('../config/secrets.yml'))
-    CORRECT = YAML.load(File.read('fixtures/results.yml'))
-    CASSTTE_FILE = 'facebook_api'.freeze
 
     VCR.configure do |c|
         c.cassette_library_dir = 'cassettes'

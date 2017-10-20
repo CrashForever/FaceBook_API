@@ -33,15 +33,15 @@ http_interactions:
       Content-Type:
       - text/javascript; charset=UTF-8
       X-Fb-Trace-Id:
-      - ConAVflKsum
+      - FnhNA74pwij
       Facebook-Api-Version:
       - v2.10
       Expires:
       - Sat, 01 Jan 2000 00:00:00 GMT
       X-Fb-Debug:
-      - S1D6Ceaq2lfnvLwdh7Xbs+InbS698ub/C4LS/fLMMwP0kKDJtK/H/rXKgKS+KNicA1+Kbq3L1YtBUBNzp/upmQ==
+      - k+08Ea66fEgMjSHqeZY+WF698VJkDXHnB57sSqR0h0B51aRsDGJVIDGXiJv3b/l3Pk3+6Wzp1/bLhsmkE9PCZA==
       Date:
-      - Fri, 20 Oct 2017 09:22:39 GMT
+      - Fri, 20 Oct 2017 09:32:15 GMT
       Connection:
       - close
       Content-Length:
@@ -50,5 +50,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"name":"\u9760\u5317\u6e05\u5927","id":"576472312465910"}'
     http_version: 
-  recorded_at: Fri, 20 Oct 2017 09:22:38 GMT
+  recorded_at: Fri, 20 Oct 2017 09:32:15 GMT
 recorded_with: VCR 3.0.3
