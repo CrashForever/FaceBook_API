@@ -7,11 +7,25 @@ describe 'Tests Praise library' do
     PAGE_NAME = 'cowbeiNTHU'.freeze
     CONFIG = YAML.safe_load(File.read('../config/secrets.yml'))
     CORRECT = YAML.load(File.read('fixtures/results.yml'))
+    CASSTTE_FILE = 'facebook_api'.freeze
+
+    VCR.configure do |c|
+        c.cassette_library_dir = 'cassettes'
+        c.hook_into :webmock
+    end
+
 
     describe 'Pody Information' do
         before do
+            VCR.insert_cassette CASSTTE_FILE,
+                                record: :new_episodes,
+                                match_requests_on: [:method, :uri, :headers]
             @posts = PostsPraise::FacebookAPI.new(CONFIG)
                                              .getPosts(PAGE_NAME)
+        end
+
+        after do
+            VCR.eject_cassette
         end
 
         it "HAPPY: should be a array" do
