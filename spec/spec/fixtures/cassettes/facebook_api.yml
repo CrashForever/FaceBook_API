@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://graph.facebook.com/v2.10/cowbeiNTHU
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Authorization:
+      - Bearer <FACEBOOK_TOKEN>
+      Connection:
+      - close
+      Host:
+      - graph.facebook.com
+      User-Agent:
+      - http.rb/3.0.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - '"095ea4893e5ba9c8025470ed6ae99c948bf1f26f"'
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      X-Fb-Rev:
+      - '3387568'
+      Content-Type:
+      - text/javascript; charset=UTF-8
+      X-Fb-Trace-Id:
+      - E0Q90F9tFC9
+      Facebook-Api-Version:
+      - v2.10
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      X-Fb-Debug:
+      - S9/GXRLI2S9+1iPkKuFpKpHoosggYxS9Lo4j1SIvE+FObJWede5Xq94dcwE1bjBikAmhkbJ4beQ9klI0DppzSQ==
+      Date:
+      - Fri, 20 Oct 2017 08:49:37 GMT
+      Connection:
+      - close
+      Content-Length:
+      - '58'
+    body:
+      encoding: UTF-8
+      string: '{"name":"\u9760\u5317\u6e05\u5927","id":"576472312465910"}'
+    http_version: 
+  recorded_at: Fri, 20 Oct 2017 08:49:36 GMT
+recorded_with: VCR 3.0.3
