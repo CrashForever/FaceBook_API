@@ -26,7 +26,7 @@ module PostsPraise
       cowbeiNTHU_post_url = fb_get_Fanpage_posts_path(fanpage_id_info['id'], 'fields=message&limit=100')
 
       VCR.configure do |c|
-        c.cassette_library_dir = './spec/fixtures/cassettes/'
+        c.cassette_library_dir = '../spec/fixtures/cassettes/'
         c.hook_into :webmock
         c.filter_sensitive_data('<FACEBOOK_TOKEN>'){ @fb_token }
         c.filter_sensitive_data('<FACEBOOK_TOKEN_ESC>'){ CGI.escape(@fb_token) }
