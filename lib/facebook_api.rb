@@ -7,70 +7,77 @@ module PostsPraise
   # Library for FacebookAPI
   class FacebookAPI
     module Errors
-      class NotFound < StandardError; end
-      class Unauthorized < StandardError; end
+      # Not allowed to access resource
+      Unauthorized = Class.new(StandardError)
+      # Requested resource not found
+      NotFound = Class.new(StandardError)
     end
+    # Encapsulates API response success and errors
+    class Response
+      HTTP_ERROR = {
+        # Not allowed to access resource
+        401 => Errors::Unauthorized,
+        404 => Errors::NotFound
+      }.freeze
 
-    HTTP_ERROR = {
-      401 => Errors::Unauthorized,
-      404 => Errors::NotFound
-    }.freeze
+      def initialize(response)
+        @response = response
+      end
+
+      def successful?
+        HTTP_ERROR.keys.include?(@response.code) ? false : true
+      end
+
+      def response_or_error
+        successful? ? @response : raise(HTTP_ERROR[@response.code])
+      end
+    end
 
     def initialize(config)
       @fb_token = config['FB_API_TOKEN']
     end
 
-    def getPosts(fanpageName)
+    def get_posts(fanpage_name)
       posts = []
-      fanpage_id_info = get_fanpage_id(fanpageName)
-      cowbeiNTHU_post_url = fb_get_Fanpage_posts_path(fanpage_id_info['id'], 'fields=message&limit=100')
+      fanpage_id_info = get_fanpage_id(fanpage_name)
+      cowbeinthu_post_url = FacebookAPI.fb_get_fanpage_posts_path(fanpage_id_info['id'], 'fields=message&limit=100')
 
-      VCR.configure do |c|
-        c.cassette_library_dir = '../spec/fixtures/cassettes/'
-        c.hook_into :webmock
-        c.filter_sensitive_data('<FACEBOOK_TOKEN>'){ @fb_token }
-        c.filter_sensitive_data('<FACEBOOK_TOKEN_ESC>'){ CGI.escape(@fb_token) }
+      VCR.configure do |config|
+        config.cassette_library_dir = '../spec/fixtures/cassettes/'
+        config.hook_into :webmock
+        config.filter_sensitive_data('<FACEBOOK_TOKEN>') { @fb_token }
+        config.filter_sensitive_data('<FACEBOOK_TOKEN_ESC>') { CGI.escape(@fb_token) }
       end
       VCR.insert_cassette 'fbAPI', record: :new_episodes
 
-      fanPages_Posts = JSON.parse(call_fb_api_url(cowbeiNTHU_post_url))
+      fanpages_posts = JSON.parse(call_fb_api_url(cowbeinthu_post_url))
       VCR.eject_cassette
 
-      fanPages_Posts['data'].each do |post|
+      fanpages_posts['data'].each do |post|
         posts.push(Post.new(post))
       end
-      return posts
+      posts
     end
-
 
     private
 
     def get_fanpage_id(fanpage)
-      cowbeiNTHU_id_url = fb_get_id_path(fanpage)
-      JSON.parse(call_fb_api_url(cowbeiNTHU_id_url))
+      cowbeinthu_id_url = FacebookAPI.fb_get_id_path(fanpage)
+      JSON.parse(call_fb_api_url(cowbeinthu_id_url))
     end
 
-    def fb_get_id_path(id)
+    def self.fb_get_id_path(id)
       'https://graph.facebook.com/v2.10/' + id
     end
 
     def call_fb_api_url(url)
-
       HTTP.headers(
         'Authorization' => "Bearer #{@fb_token}"
       ).get(url)
     end
 
-    def fb_get_Fanpage_posts_path(id, fields = '')
+    def self.fb_get_fanpage_posts_path(id, fields = '')
       'https://graph.facebook.com/v2.10/' + id + '/feed?' + fields
-    end
-
-    def successful?(result)
-      HTTP_ERROR.keys.include?(result.code) ? false : true
-    end
-
-    def raise_error(result)
-      raise(HTTP_ERROR[result.code])
     end
   end
 end
