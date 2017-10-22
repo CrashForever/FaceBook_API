@@ -1,8 +1,9 @@
+require 'simplecov'
+SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/rg'
 require 'yaml'
-require 'simplecov'
-SimpleCov.start
+
 
 require_relative '../lib/facebook_api.rb'
 

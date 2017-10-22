@@ -32,13 +32,16 @@ describe 'Tests Praise library' do
 
     it 'HAPPY: should provide same post message' do
       @posts.zip(CORRECT).each do |m1, m2|
-        m1.message.must_equal m2.message
+        _(m1.message).wont_be_nil
+        _(m1.message).must_equal m2.message
       end
     end
 
     it 'HAPPY: should provide same post id' do
       @posts.zip(CORRECT).each do |m1, m2|
-        m1.id.must_equal m2.id
+
+        _(m1.id).wont_be_nil
+        _(m1.id).must_equal m2.id
       end
     end
   end

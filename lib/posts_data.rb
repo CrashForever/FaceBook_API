@@ -6,11 +6,11 @@ module PostsPraise
     end
 
     def message
-      @message = @data['message']
+      @data['message']
     end
 
     def id
-      @id = @data['id']
+      @data['id']
     end
   end
 end
