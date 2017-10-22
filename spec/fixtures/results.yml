@@ -1,7 +1,7 @@
 ---
 - !ruby/object:PostsPraise::Post
   data:
-    message: "聽說有一位105歲的老爺爺在清大的課上旁聽，還準備考博士學位，請問有誰遇見過他麼？超崇拜！"
+    message: 聽說有一位105歲的老爺爺在清大的課上旁聽，還準備考博士學位，請問有誰遇見過他麼？超崇拜！
     id: '576472312465910_1471030469676752'
 - !ruby/object:PostsPraise::Post
   data:
